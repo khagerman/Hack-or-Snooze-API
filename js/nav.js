@@ -56,3 +56,13 @@ function showMyStoriesForm() {
   $("#my-stories").show("slow");
 }
 $("#nav-my-stories").on("click", showMyStoriesForm);
+
+function myProfile() {
+  if (currentUser) {
+    hidePageComponents();
+    $("#about-user").show("slow");
+    updateUserProfile();
+  }
+}
+
+$("#nav-user-profile").on("click", myProfile);

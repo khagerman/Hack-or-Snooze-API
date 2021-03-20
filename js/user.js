@@ -35,20 +35,23 @@ $loginForm.on("submit", login);
 async function signup(evt) {
   console.debug("signup", evt);
   evt.preventDefault();
+  try {
+    const name = $("#signup-name").val();
+    const username = $("#signup-username").val();
+    const password = $("#signup-password").val();
 
-  const name = $("#signup-name").val();
-  const username = $("#signup-username").val();
-  const password = $("#signup-password").val();
+    // User.signup retrieves user info from API and returns User instance
+    // which we'll make the globally-available, logged-in user.
+    currentUser = await User.signup(username, password, name);
 
-  // User.signup retrieves user info from API and returns User instance
-  // which we'll make the globally-available, logged-in user.
-  currentUser = await User.signup(username, password, name);
+    saveUserCredentialsInLocalStorage();
+    updateUIOnUserLogin();
 
-  saveUserCredentialsInLocalStorage();
-  updateUIOnUserLogin();
-
-  $signupForm.trigger("reset");
-  location.reload();
+    $signupForm.trigger("reset");
+    location.reload();
+  } catch (err) {
+    alert("Oops, something went wrong. Username may be taken.");
+  }
 }
 
 $signupForm.on("submit", signup);
@@ -116,4 +119,16 @@ function updateUIOnUserLogin() {
   updateNavOnLogin();
   displayMyStories();
   addFavoritetoList();
+}
+
+function updateUserProfile() {
+  $("#about-user").empty();
+  $("#about-user").append(
+    ` <h2> Hi ${currentUser.name}!</h2> <li> Your username: ${
+      currentUser.username
+    }</li> <li>You created your account on: ${currentUser.createdAt.slice(
+      0,
+      10
+    )}</li>`
+  );
 }

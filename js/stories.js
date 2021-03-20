@@ -55,21 +55,26 @@ function putStoriesOnPage() {
 /** Add new story to api when form submited, hide submit form*/
 async function submitStory(e) {
   e.preventDefault();
+  try {
+    const title = $("#title").val();
+    const url = $("#url").val();
+    const author = $("#author").val();
 
-  const title = $("#title").val();
-  const url = $("#url").val();
-  const author = $("#author").val();
-
-  const newStory = { title, author, url };
-  const story = await storyList.addStory(currentUser, newStory);
-  $allStoriesList.prepend(generateStoryMarkup(story));
-  displayMyStories();
-  $("#submitform").slideUp();
-  $("#submitform").trigger("reset");
-  $allStoriesList.show();
+    const newStory = { title, author, url };
+    const story = await storyList.addStory(currentUser, newStory);
+    $allStoriesList.prepend(generateStoryMarkup(story));
+    displayMyStories();
+    $("#submitform").slideUp();
+    $("#submitform").trigger("reset");
+    $allStoriesList.show();
+  } catch (err) {
+    alert(
+      "Oops, something went wrong, make sure you entered all information and a correct url."
+    );
+  }
 }
 $("#submitstory").on("click", submitStory);
-/**Put user stories on the my story tab */
+/**Put user stories on the my story tab, add trash can icon */
 function displayMyStories() {
   if (currentUser.ownStories.length > 0) {
     $("#my-stories").empty();
