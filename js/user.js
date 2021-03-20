@@ -50,7 +50,9 @@ async function signup(evt) {
     $signupForm.trigger("reset");
     location.reload();
   } catch (err) {
-    alert("Oops, something went wrong. Username may be taken.");
+    alert(
+      "Oops, something went wrong. Username may be taken or you forgot to enter all fields."
+    );
   }
 }
 

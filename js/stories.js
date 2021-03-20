@@ -56,20 +56,22 @@ function putStoriesOnPage() {
 async function submitStory(e) {
   e.preventDefault();
   try {
-    const title = $("#title").val();
-    const url = $("#url").val();
-    const author = $("#author").val();
+    if (title.val() !== "" || url.val() !== "" || author.val() !== "") {
+      const title = $("#title").val();
+      const url = $("#url").val();
+      const author = $("#author").val();
 
-    const newStory = { title, author, url };
-    const story = await storyList.addStory(currentUser, newStory);
-    $allStoriesList.prepend(generateStoryMarkup(story));
-    displayMyStories();
-    $("#submitform").slideUp();
-    $("#submitform").trigger("reset");
-    $allStoriesList.show();
+      const newStory = { title, author, url };
+      const story = await storyList.addStory(currentUser, newStory);
+      $allStoriesList.prepend(generateStoryMarkup(story));
+      displayMyStories();
+      $("#submitform").slideUp();
+      $("#submitform").trigger("reset");
+      $allStoriesList.show();
+    }
   } catch (err) {
     alert(
-      "Oops, something went wrong, make sure you entered all information and a correct url."
+      "Oops, something went wrong, make sure you entered all required fields and a correct url (containing HTTP)."
     );
   }
 }
