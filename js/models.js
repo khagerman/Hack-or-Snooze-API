@@ -89,7 +89,7 @@ class StoryList {
     user.ownStories.unshift(newUserStory);
     return newUserStory;
   }
-  //  remove story from API
+  //  remove story from API and arrays
   async deleteStoryFromAPI(user, id) {
     await axios({
       url: `${BASE_URL}/stories/${id}`,
@@ -99,8 +99,10 @@ class StoryList {
 
     this.stories = this.stories.filter((story) => story.storyId !== id);
 
-    user.ownStories = user.ownStories.filter((s) => s.storyId !== id);
-    user.favorites = user.favorites.filter((s) => s.storyId !== id);
+    user.ownStories = user.ownStories.filter(
+      (element) => element.storyId !== id
+    );
+    user.favorites = user.favorites.filter((element) => element.storyId !== id);
   }
 }
 /******************************************************************************

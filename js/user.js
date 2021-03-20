@@ -124,7 +124,9 @@ function updateUIOnUserLogin() {
 function updateUserProfile() {
   $("#about-user").empty();
   $("#about-user").append(
-    ` <h2> Hi ${currentUser.name}!</h2> <li> Your username: ${
+    ` <h2> Hi, ${
+      currentUser.name.charAt(0).toUpperCase() + currentUser.name.slice(1)
+    }!</h2> <li> Your username: ${
       currentUser.username
     }</li> <li>You created your account on: ${currentUser.createdAt.slice(
       0,
