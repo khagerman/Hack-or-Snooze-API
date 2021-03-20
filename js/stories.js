@@ -71,7 +71,7 @@ async function submitStory(e) {
     }
   } catch (err) {
     alert(
-      "Oops, something went wrong, make sure you entered all required fields and a correct url (containing HTTP)."
+      "Oops, something went wrong. Make sure you entered all required fields and a correct url (containing HTTP)."
     );
   }
 }
