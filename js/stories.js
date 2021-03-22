@@ -55,21 +55,24 @@ function putStoriesOnPage() {
 /** Add new story to api when form submited, hide submit form*/
 async function submitStory(e) {
   e.preventDefault();
-  try {
-    if (title.val() !== "" || url.val() !== "" || author.val() !== "") {
-      const title = $("#title").val();
-      const url = $("#url").val();
-      const author = $("#author").val();
 
-      const newStory = { title, author, url };
-      const story = await storyList.addStory(currentUser, newStory);
-      $allStoriesList.prepend(generateStoryMarkup(story));
-      displayMyStories();
-      $("#submitform").slideUp();
-      $("#submitform").trigger("reset");
-      $allStoriesList.show();
-    }
-  } catch (err) {
+  if (
+    $("#title").val() !== "" &&
+    $("#url").val() !== "" &&
+    $("#author").val() !== ""
+  ) {
+    const title = $("#title").val();
+    const url = $("#url").val();
+    const author = $("#author").val();
+
+    const newStory = { title, author, url };
+    const story = await storyList.addStory(currentUser, newStory);
+    $allStoriesList.prepend(generateStoryMarkup(story));
+    displayMyStories();
+    $("#submitform").slideUp();
+    $("#submitform").trigger("reset");
+    $allStoriesList.show();
+  } else {
     alert(
       "Oops, something went wrong. Make sure you entered all required fields and a correct url (containing HTTP)."
     );
